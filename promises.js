@@ -15,8 +15,7 @@ function printPost() {
     }, 1000);
 
 }
-//pushing object 
-function pushPost(obj){
+function createPost(obj){
     return new Promise((resolve,reject)=>{
         setTimeout(()=>{
             obj.createdAt = new Date().getTime();
@@ -26,16 +25,15 @@ function pushPost(obj){
         },2000);
     })
 }
-//printing last activity
+
 function lastactivityTime(){
     return new Promise((resolve,reject)=>{
         setTimeout(()=>{
             console.log('Last Activity Time:',new Date().getTime());
+            resolve();
         },1000);
     })  
 }
 
-pushPost({title:'Post Three',body:'This is post three'})
-.then(()=>printPost())
-.then(()=> lastactivityTime());
-
+Promise.all([createPost({ title: 'post Three', body: 'This is post three' }),lastactivityTime()])
+.then(printPost);
